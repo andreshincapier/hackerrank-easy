@@ -10,57 +10,25 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        List<Integer> b = List.of(2, 4, 2);
-        List<Integer> a = List.of(3, 16, 8);
-        List<List<Integer>> equipo = List.of(a, b);
-        System.out.println(maximoNumeroHoras(equipo));
+        List<Long> prestamo = List.of(15L, 16L, 45L);
+        System.out.println(calcularDias(prestamo));
     }
 
-    public static List<Integer> maximoNumeroHoras(List<List<Integer>> equipo) {
+    public static List<Long> calcularDias(List<Long> prestamo) {
 
-        int bigTask;
-        List<Integer> result = new ArrayList<>();
+        List<Long> result = new ArrayList<>();
 
-        List<Info> list = equipo
-            .stream()
-            .map(Info::new).toList();
+        prestamo.forEach(l -> {
+            long accumulator = 1L;
 
-        for (Info i : list) {
-            int totalHours = i.getT() * i.getN();
-            if (i.getT() <= 2) {
-                bigTask = totalHours - i.getR();
-                result.add(bigTask);
-            } else {
-                int smallTask = (i.getN() - 1) * i.getR();
-                bigTask = totalHours - smallTask;
-                result.add(bigTask);
+            for (long j = 1; j < l; j++) {
+                accumulator += accumulator;
+                if (accumulator > l) {
+                    result.add(j);
+                    break;
+                }
             }
-        }
+        });
         return result;
-    }
-}
-
-class Info {
-
-    private Integer N;
-    private Integer T;
-    private Integer R;
-
-    public Info(List<Integer> data) {
-        this.N = data.get(0);
-        this.T = data.get(1);
-        this.R = data.get(2);
-    }
-
-    public Integer getN() {
-        return N;
-    }
-
-    public Integer getT() {
-        return T;
-    }
-
-    public Integer getR() {
-        return R;
     }
 }
