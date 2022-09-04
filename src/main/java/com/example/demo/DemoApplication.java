@@ -18,15 +18,16 @@ public class DemoApplication {
 
     public static List<Integer> maximoNumeroHoras(List<List<Integer>> equipo) {
 
-        int bigTask;
         List<Integer> result = new ArrayList<>();
 
         List<Info> list = equipo
             .stream()
             .map(Info::new).toList();
 
-        for (Info i : list) {
+        list.forEach(i -> {
+            int bigTask;
             int totalHours = i.getT() * i.getN();
+
             if (i.getT() <= 2) {
                 bigTask = totalHours - i.getR();
                 result.add(bigTask);
@@ -35,7 +36,7 @@ public class DemoApplication {
                 bigTask = totalHours - smallTask;
                 result.add(bigTask);
             }
-        }
+        });
         return result;
     }
 }
