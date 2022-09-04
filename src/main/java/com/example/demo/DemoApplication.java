@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -13,38 +12,36 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DemoApplication {
 
-    private static final Map<String, Point> conversor;
+    private static final Map<String, Point> conversions;
 
     static {
-        conversor = new HashMap<>();
-        conversor.put("U", new Point(0, 1));
-        conversor.put("R", new Point(1, 0));
-        conversor.put("L", new Point(-1, 0));
-        conversor.put("D", new Point(0, -1));
+        conversions = new HashMap<>();
+        conversions.put("U", new Point(0, 1));
+        conversions.put("R", new Point(1, 0));
+        conversions.put("L", new Point(-1, 0));
+        conversions.put("D", new Point(0, -1));
     }
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        List<String> comands = Arrays.asList("RUULLLDDDR");
-        System.out.println(calcularMaximoRetorno(comands));
+        List<String> commands = List.of("RUULLLDDDR");
+        System.out.println(calcularMaximoRetorno(commands));
     }
 
-    public static List<Integer> calcularMaximoRetorno(List<String> instruccions) {
+    public static List<Integer> calcularMaximoRetorno(List<String> instruccion) {
 
-        List<Integer> respuesta = new ArrayList<>();
+        List<Integer> response = new ArrayList<>();
 
-        for (String instruccion : instruccions) {
-
+        instruccion.forEach(s -> {
             Point origen = new Point(0, 0);
 
-            Stream.of(instruccion.split(""))
-                .map(conversor::get)
+            Stream.of(s.split(""))
+                .map(conversions::get)
                 .map(origen::add)
                 .max(Comparator.comparing(Point::getDistance))
-                .ifPresent(p -> respuesta.add(p.getAmountStep()));
-        }
-
-        return respuesta;
+                .ifPresent(p -> response.add(p.getAmountStep()));
+        });
+        return response;
     }
 
 }
@@ -57,14 +54,6 @@ class Point {
     public Point(Integer x, Integer y) {
         this.x = x;
         this.y = y;
-    }
-
-    public Integer getX() {
-        return x;
-    }
-
-    public Integer getY() {
-        return y;
     }
 
     @Override
