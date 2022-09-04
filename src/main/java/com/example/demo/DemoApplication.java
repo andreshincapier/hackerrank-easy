@@ -20,13 +20,13 @@ public class DemoApplication {
 
     public static List<Boolean> podraCumplir(List<List<Integer>> caso) {
 
-        List<Boolean> valid = new ArrayList<>();
+        List<Boolean> valid = new ArrayList();
 
         List<Info> list = caso
             .stream()
             .map(Info::new).toList();
 
-        for (Info i : list) {
+        list.forEach(i -> {
             int ac = 0;
             for (int j = 0; j < i.getD() - 1; j++) {
                 ac += (i.getF() - i.getR());
@@ -34,8 +34,7 @@ public class DemoApplication {
             ac += i.getF();
             boolean result = (i.getT() == ac);
             valid.add(result);
-        }
-
+        });
         return valid;
     }
 
