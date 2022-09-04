@@ -25,17 +25,12 @@ public class DemoApplication {
             .map(Info::new).toList();
 
         list.forEach(i -> {
-            int bigTask;
             int totalHours = i.getT() * i.getN();
+            int bigTask;
+            int smallTask = (i.getN() - 1) * i.getR();
 
-            if (i.getT() <= 2) {
-                bigTask = totalHours - i.getR();
-                result.add(bigTask);
-            } else {
-                int smallTask = (i.getN() - 1) * i.getR();
-                bigTask = totalHours - smallTask;
-                result.add(bigTask);
-            }
+            bigTask = totalHours - smallTask;
+            result.add(bigTask);
         });
         return result;
     }
