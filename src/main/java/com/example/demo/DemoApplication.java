@@ -9,13 +9,28 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        List<Long> prestamo = List.of(1000000001L, 1000000002L, 1000000003L, 1000000004L,
-            1000000005L);
-        System.out.println(aVeryBigSum(prestamo));
+        List<Integer> a = List.of(11, 2, 4);
+        List<Integer> b = List.of(4, 5, 6);
+        List<Integer> c = List.of(10, 8, -12);
+        List<List<Integer>> arr = List.of(a, b, c);
+        System.out.println(diagonalDifference(arr));
     }
 
-    public static Long aVeryBigSum(List<Long> ar) {
+    public static int diagonalDifference(List<List<Integer>> arr) {
+        int firstDiagonal = 0;
+        int secondDiagonal = 0;
 
-        return ar.stream().mapToLong(l -> l).sum();
+        for (int i = 0; i < arr.size(); i++) {
+            for (int j = 0; j < arr.size(); j++) {
+                if (i == j) {
+                    firstDiagonal += arr.get(i).get(j);
+                }
+
+                if ((i + j) == (arr.size() - 1)) {
+                    secondDiagonal += arr.get(i).get(j);
+                }
+            }
+        }
+        return Math.abs(firstDiagonal - secondDiagonal);
     }
 }
