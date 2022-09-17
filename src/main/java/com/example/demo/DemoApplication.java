@@ -10,36 +10,36 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        List<Integer> grades = List.of(73, 67, 38, 33);
-        System.out.println(gradingStudents(grades));
+        List<Integer> apples = List.of(2, 3, -4);
+        List<Integer> oranges = List.of(3, -2, -4);
+        countApplesAndOranges(7, 10, 4, 12, apples, oranges);
     }
 
-    public static List<Integer> gradingStudents(List<Integer> grades) {
-        List<Integer> finalGrade = new ArrayList<>();
+    public static void countApplesAndOranges(int s, int t, int a, int b, List<Integer> apples,
+        List<Integer> oranges) {
 
-        grades.forEach(grade -> {
-            if (grade < 38) {
-                finalGrade.add(grade);
-            } else {
-                Integer r = finalGrade(grade);
-                finalGrade.add(r);
-            }
+        List<Integer> applesArr = calculateDistance(a, apples);
+        List<Integer> orangesArr = calculateDistance(b, oranges);
+
+        System.out.println(inRange(s, t, applesArr));
+        System.out.println(inRange(s, t, orangesArr));
+
+    }
+
+    public static long inRange(int s, int t, List<Integer> array) {
+        return array.stream()
+            .filter(i -> i >= s && i <= t)
+            .count();
+    }
+
+    public static List<Integer> calculateDistance(int located, List<Integer> array) {
+
+        List<Integer> cal = new ArrayList<>();
+        array.forEach(p -> {
+            int value = located + p;
+            cal.add(value);
         });
-        return finalGrade;
-    }
 
-    public static Integer roundFive(Integer grade) {
-        return (grade + 4) / 5 * 5;
+        return cal;
     }
-
-    public static Integer finalGrade(Integer grade) {
-        int round = roundFive(grade);
-        int subtract = Math.subtractExact(round, grade);
-        if (subtract < 3) {
-            return round;
-        } else {
-            return grade;
-        }
-    }
-
 }
